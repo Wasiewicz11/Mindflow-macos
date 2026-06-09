@@ -1,0 +1,137 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXFileReference section */
+		ABCDEF0123456789ABCDEF01 /* MindflowMenuBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindflowMenuBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		ABCDEF0123456789ABCDEF10 /* Exceptions for "MindflowMenuBar" folder in "MindflowMenuBar" target */ = {isa = PBXFileSystemSynchronizedBuildFileExceptionSet; membershipExceptions = (Info.plist, ); target = ABCDEF0123456789ABCDEF06 /* MindflowMenuBar */; };
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		ABCDEF0123456789ABCDEF02 /* MindflowMenuBar */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (ABCDEF0123456789ABCDEF10 /* Exceptions for "MindflowMenuBar" folder in "MindflowMenuBar" target */, ); explicitFileTypes = {}; explicitFolders = (); path = MindflowMenuBar; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ABCDEF0123456789ABCDEF03 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ABCDEF0123456789ABCDEF04 = {isa = PBXGroup; children = (ABCDEF0123456789ABCDEF02 /* MindflowMenuBar */, ABCDEF0123456789ABCDEF05 /* Products */, ); sourceTree = "<group>"; };
+		ABCDEF0123456789ABCDEF05 /* Products */ = {isa = PBXGroup; children = (ABCDEF0123456789ABCDEF01 /* MindflowMenuBar.app */, ); name = Products; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ABCDEF0123456789ABCDEF06 /* MindflowMenuBar */ = {isa = PBXNativeTarget; buildConfigurationList = ABCDEF0123456789ABCDEF0D /* Build configuration list for PBXNativeTarget "MindflowMenuBar" */; buildPhases = (ABCDEF0123456789ABCDEF07 /* Sources */, ABCDEF0123456789ABCDEF03 /* Frameworks */, ABCDEF0123456789ABCDEF08 /* Resources */, ); buildRules = (); dependencies = (); fileSystemSynchronizedGroups = (ABCDEF0123456789ABCDEF02 /* MindflowMenuBar */, ); name = MindflowMenuBar; packageProductDependencies = (); productName = MindflowMenuBar; productReference = ABCDEF0123456789ABCDEF01 /* MindflowMenuBar.app */; productType = "com.apple.product-type.application"; };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ABCDEF0123456789ABCDEF09 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 2620; LastUpgradeCheck = 2620; TargetAttributes = {ABCDEF0123456789ABCDEF06 = {CreatedOnToolsVersion = 26.2; }; }; }; buildConfigurationList = ABCDEF0123456789ABCDEF0A /* Build configuration list for PBXProject "MindflowMenuBar" */; compatibilityVersion = "Xcode 15.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base, ); mainGroup = ABCDEF0123456789ABCDEF04; minimizedProjectReferenceProxies = 1; preferredProjectObjectVersion = 77; productRefGroup = ABCDEF0123456789ABCDEF05 /* Products */; projectDirPath = ""; projectRoot = ""; targets = (ABCDEF0123456789ABCDEF06 /* MindflowMenuBar */, ); };
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ABCDEF0123456789ABCDEF08 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ABCDEF0123456789ABCDEF07 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		ABCDEF0123456789ABCDEF0B /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
+			ALWAYS_SEARCH_USER_PATHS = NO;
+			ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+			CLANG_ANALYZER_NONNULL = YES;
+			CLANG_ENABLE_MODULES = YES;
+			CLANG_ENABLE_OBJC_ARC = YES;
+			CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+			CLANG_WARN_BOOL_CONVERSION = YES;
+			CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+			CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+			COPY_PHASE_STRIP = NO;
+			DEBUG_INFORMATION_FORMAT = dwarf;
+			ENABLE_STRICT_OBJC_MSGSEND = YES;
+			ENABLE_TESTABILITY = YES;
+			GCC_DYNAMIC_NO_PIC = NO;
+			GCC_NO_COMMON_BLOCKS = YES;
+			GCC_OPTIMIZATION_LEVEL = 0;
+			GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)", );
+			MACOSX_DEPLOYMENT_TARGET = 14.0;
+			MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+			MTL_FAST_MATH = YES;
+			ONLY_ACTIVE_ARCH = YES;
+			SDKROOT = macosx;
+			SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+			SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+		}; name = Debug; };
+		ABCDEF0123456789ABCDEF0C /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
+			ALWAYS_SEARCH_USER_PATHS = NO;
+			ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+			CLANG_ANALYZER_NONNULL = YES;
+			CLANG_ENABLE_MODULES = YES;
+			CLANG_ENABLE_OBJC_ARC = YES;
+			CLANG_WARN_BOOL_CONVERSION = YES;
+			CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+			CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+			COPY_PHASE_STRIP = NO;
+			DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+			ENABLE_NS_ASSERTIONS = NO;
+			ENABLE_STRICT_OBJC_MSGSEND = YES;
+			GCC_NO_COMMON_BLOCKS = YES;
+			MACOSX_DEPLOYMENT_TARGET = 14.0;
+			MTL_ENABLE_DEBUG_INFO = NO;
+			MTL_FAST_MATH = YES;
+			SDKROOT = macosx;
+			SWIFT_COMPILATION_MODE = wholemodule;
+		}; name = Release; };
+		ABCDEF0123456789ABCDEF0E /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
+			ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+			CODE_SIGN_IDENTITY = "-";
+			CODE_SIGN_STYLE = Automatic;
+			COMBINE_HIDPI_IMAGES = YES;
+			CURRENT_PROJECT_VERSION = 1;
+			ENABLE_HARDENED_RUNTIME = YES;
+			ENABLE_PREVIEWS = YES;
+			GENERATE_INFOPLIST_FILE = NO;
+			INFOPLIST_FILE = MindflowMenuBar/Info.plist;
+			INFOPLIST_KEY_NSHumanReadableCopyright = "";
+			"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = ("$(inherited)", "@executable_path/../Frameworks", );
+			MARKETING_VERSION = 1.0;
+			PRODUCT_BUNDLE_IDENTIFIER = com.mindflow.menubar;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+		}; name = Debug; };
+		ABCDEF0123456789ABCDEF0F /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
+			ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+			CODE_SIGN_IDENTITY = "-";
+			CODE_SIGN_STYLE = Automatic;
+			COMBINE_HIDPI_IMAGES = YES;
+			CURRENT_PROJECT_VERSION = 1;
+			ENABLE_HARDENED_RUNTIME = YES;
+			ENABLE_PREVIEWS = YES;
+			GENERATE_INFOPLIST_FILE = NO;
+			INFOPLIST_FILE = MindflowMenuBar/Info.plist;
+			INFOPLIST_KEY_NSHumanReadableCopyright = "";
+			"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = ("$(inherited)", "@executable_path/../Frameworks", );
+			MARKETING_VERSION = 1.0;
+			PRODUCT_BUNDLE_IDENTIFIER = com.mindflow.menubar;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+		}; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ABCDEF0123456789ABCDEF0A /* Build configuration list for PBXProject "MindflowMenuBar" */ = {isa = XCConfigurationList; buildConfigurations = (ABCDEF0123456789ABCDEF0B /* Debug */, ABCDEF0123456789ABCDEF0C /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		ABCDEF0123456789ABCDEF0D /* Build configuration list for PBXNativeTarget "MindflowMenuBar" */ = {isa = XCConfigurationList; buildConfigurations = (ABCDEF0123456789ABCDEF0E /* Debug */, ABCDEF0123456789ABCDEF0F /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = ABCDEF0123456789ABCDEF09 /* Project object */;
+}
