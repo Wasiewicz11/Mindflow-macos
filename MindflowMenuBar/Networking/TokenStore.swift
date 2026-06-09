@@ -1,21 +1,27 @@
 import Foundation
 import Security
 
-/// Trzyma access token w Keychain (a nie w UserDefaults), bo to sekret.
+/// Trzyma access i refresh token w Keychain (a nie w UserDefaults), bo to sekrety.
+/// Refresh token trzymamy sami, zeby przezyl restart apki (cookie-jar URLSession nie przezywa).
 final class TokenStore {
     private let service = "com.mindflow.menubar"
-    private let account = "accessToken"
 
     var accessToken: String? {
-        get { read() }
-        set {
-            if let newValue { save(newValue) } else { delete() }
-        }
+        get { read(account: "accessToken") }
+        set { write(account: "accessToken", value: newValue) }
     }
 
-    func clear() { delete() }
+    var refreshToken: String? {
+        get { read(account: "refreshToken") }
+        set { write(account: "refreshToken", value: newValue) }
+    }
 
-    private func read() -> String? {
+    func clear() {
+        write(account: "accessToken", value: nil)
+        write(account: "refreshToken", value: nil)
+    }
+
+    private func read(account: String) -> String? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
@@ -30,25 +36,16 @@ final class TokenStore {
         return token
     }
 
-    private func save(_ token: String) {
-        let data = Data(token.utf8)
+    private func write(account: String, value: String?) {
         let base: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
             kSecAttrAccount as String: account,
         ]
         SecItemDelete(base as CFDictionary)
+        guard let value else { return }
         var insert = base
-        insert[kSecValueData as String] = data
+        insert[kSecValueData as String] = Data(value.utf8)
         SecItemAdd(insert as CFDictionary, nil)
-    }
-
-    private func delete() {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: account,
-        ]
-        SecItemDelete(query as CFDictionary)
     }
 }
