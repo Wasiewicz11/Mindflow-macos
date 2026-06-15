@@ -7,6 +7,8 @@ final class AgendaViewModel: ObservableObject {
     @Published private(set) var now = Date()
     @Published private(set) var isLoading = false
     @Published private(set) var lastError: String?
+    /// false dopoki nie zaladujemy dnia choc raz (chroni przed falszywym "zielonym" stanem).
+    @Published private(set) var hasLoaded = false
 
     private var api: APIClient?
     private let notifier = BlockNotifier()
@@ -27,6 +29,12 @@ final class AgendaViewModel: ObservableObject {
     var minutesRemaining: Int? {
         guard let current else { return nil }
         return max(0, Int(ceil(current.end.timeIntervalSince(now) / 60)))
+    }
+
+    /// Minuty do startu nastepnego bloku. nil = nic wiecej dzisiaj.
+    var minutesUntilNext: Int? {
+        guard let next else { return nil }
+        return max(0, Int(ceil(next.start.timeIntervalSince(now) / 60)))
     }
 
     /// Postep aktualnego bloku 0...1.
@@ -52,6 +60,7 @@ final class AgendaViewModel: ObservableObject {
         api = nil
         items = []
         lastError = nil
+        hasLoaded = false
         notifier.cancelAll()
     }
 
@@ -64,6 +73,7 @@ final class AgendaViewModel: ObservableObject {
             items = agenda
             now = Date()
             lastError = nil
+            hasLoaded = true
             notifier.schedule(items: agenda, now: now)
         } catch is CancellationError {
             // ignor

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "filename" : "mindle_app_icon_surface.svg"
+    }
+  ],
+  "info" : { "author" : "xcode", "version" : 1 },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

@@ -23,6 +23,15 @@ enum AgendaFormat {
         return "\(minutes) min"
     }
 
+    /// Kompaktowo do paska menu: "za 24 min", "za 1 h", "za 3 h 40 min".
+    static func until(minutes: Int) -> String {
+        let m = max(minutes, 1)
+        if m < 60 { return "za \(m) min" }
+        let h = m / 60
+        let rest = m % 60
+        return rest == 0 ? "za \(h) h" : "za \(h) h \(rest) min"
+    }
+
     /// Odleglosc w czasie: "za 3 godz. 40 min", "za 12 min", "teraz".
     static func relative(from now: Date, to start: Date) -> String {
         let seconds = Int(start.timeIntervalSince(now))

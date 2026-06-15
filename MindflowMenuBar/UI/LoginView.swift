@@ -5,9 +5,10 @@ struct LoginView: View {
 
     var body: some View {
         VStack(spacing: 14) {
-            Image(systemName: "checklist")
-                .font(.system(size: 28, weight: .semibold))
-                .foregroundStyle(.secondary)
+            Image("AppLogo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 56, height: 56)
 
             Text("Mindflow")
                 .font(.title3.weight(.bold))
