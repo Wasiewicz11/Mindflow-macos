@@ -23,6 +23,14 @@ enum AgendaFormat {
         return "\(minutes) min"
     }
 
+    static func remaining(seconds: Int) -> String {
+        let minutes = (max(0, seconds) + 59) / 60
+        if minutes >= 60 {
+            return "\(minutes / 60):" + String(format: "%02d", minutes % 60)
+        }
+        return "\(minutes) min"
+    }
+
     /// Kompaktowo do paska menu: "za 24 min", "za 1 h", "za 3 h 40 min".
     static func until(minutes: Int) -> String {
         let m = max(minutes, 1)

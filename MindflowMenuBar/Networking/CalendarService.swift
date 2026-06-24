@@ -18,6 +18,7 @@ struct CalendarService {
             let title = block.taskId.flatMap { titleByTaskId[$0] } ?? block.title ?? "Blok czasu"
             return AgendaItem(
                 id: block.id,
+                taskId: block.taskId,
                 title: title,
                 start: start,
                 end: start.addingTimeInterval(TimeInterval(block.durationMinutes) * 60)

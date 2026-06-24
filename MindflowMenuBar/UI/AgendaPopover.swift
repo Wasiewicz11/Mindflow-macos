@@ -44,6 +44,18 @@ struct AgendaPopover: View {
                     .foregroundStyle(.secondary)
             }
 
+            if let pomodoro = agenda.activePomodoro,
+               let pomodoroTaskId = pomodoro.taskId,
+               pomodoroTaskId == item.taskId {
+                HStack(spacing: 6) {
+                    Image(systemName: "timer")
+                        .font(.system(size: 11, weight: .semibold))
+                    Text("\(pomodoro.phase.label): zostalo \(AgendaFormat.remaining(seconds: pomodoro.secondsRemaining(at: agenda.now)))")
+                        .font(.subheadline.weight(.medium))
+                }
+                .foregroundStyle(pomodoro.phase.isBreak ? Color.green : Color.red)
+            }
+
             AgendaProgressBar(value: agenda.progress)
         }
         .padding(.horizontal, 16)

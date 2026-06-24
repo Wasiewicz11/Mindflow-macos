@@ -15,9 +15,45 @@ struct ApiTask: Decodable {
     let content: String
 }
 
+enum PomodoroPhase: String, Decodable {
+    case focus = "Focus"
+    case shortBreak = "ShortBreak"
+    case longBreak = "LongBreak"
+
+    var isBreak: Bool { self != .focus }
+
+    var label: String {
+        switch self {
+        case .focus: return "Skupienie"
+        case .shortBreak: return "Krotka przerwa"
+        case .longBreak: return "Dluga przerwa"
+        }
+    }
+}
+
+struct ApiPomodoroSession: Decodable, Equatable {
+    let id: String
+    let taskId: String?
+    let title: String
+    let phase: PomodoroPhase
+    let totalSeconds: Int
+    let remainingSeconds: Int
+    let isRunning: Bool
+    let endsAt: String?
+    let updatedAt: String
+
+    func secondsRemaining(at now: Date) -> Int {
+        if isRunning, let endsAt, let end = ISODate.parse(endsAt) {
+            return max(0, Int(ceil(end.timeIntervalSince(now))))
+        }
+        return max(0, remainingSeconds)
+    }
+}
+
 /// Znormalizowany element agendy uzywany przez UI.
 struct AgendaItem: Identifiable, Equatable {
     let id: String
+    let taskId: String?
     let title: String
     let start: Date
     let end: Date

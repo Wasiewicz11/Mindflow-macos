@@ -75,6 +75,20 @@ final class APIClient {
         }
     }
 
+    func getOptional<T: Decodable>(_ path: String) async throws -> T? {
+        let data = try await sendAuthorized(path: path, method: "GET")
+        guard !data.isEmpty else { return nil }
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            throw APIError.decoding(error)
+        }
+    }
+
+    func listenForEvents(_ path: String, onEvent: @escaping @Sendable () async -> Void) async throws {
+        try await listenForEvents(path, onEvent: onEvent, retryOn401: true)
+    }
+
     func logout() async {
         _ = try? await sendAuthorized(path: "auth/logout", method: "POST", retryOn401: false)
         clearRefreshCookie()
@@ -110,6 +124,41 @@ final class APIClient {
             throw APIError.http(http.statusCode, String(data: data, encoding: .utf8) ?? "")
         }
         return data
+    }
+
+    private func listenForEvents(
+        _ path: String,
+        onEvent: @escaping @Sendable () async -> Void,
+        retryOn401: Bool
+    ) async throws {
+        var req = URLRequest(url: url(for: path))
+        req.httpMethod = "GET"
+        req.setValue("text/event-stream", forHTTPHeaderField: "Accept")
+        if let token = tokenStore.accessToken {
+            req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+
+        let (bytes, resp) = try await session.bytes(for: req)
+        guard let http = resp as? HTTPURLResponse else { throw APIError.noHTTP }
+
+        if http.statusCode == 401 && retryOn401 {
+            guard await refresh() else {
+                tokenStore.clear()
+                clearRefreshCookie()
+                DispatchQueue.main.async { [weak self] in self?.onUnauthorized?() }
+                throw APIError.unauthorized
+            }
+            return try await listenForEvents(path, onEvent: onEvent, retryOn401: false)
+        }
+
+        guard (200..<300).contains(http.statusCode) else {
+            throw APIError.http(http.statusCode, "Pomodoro event stream unavailable")
+        }
+
+        for try await line in bytes.lines where line.hasPrefix("data:") {
+            try Task.checkCancellation()
+            await onEvent()
+        }
     }
 
     /// Tylko JEDEN refresh na raz; rownolegli wolajacy czekaja na ten sam wynik.

@@ -13,7 +13,22 @@ struct MenuBarLabel: View {
     var body: some View {
         if !isLoggedIn || !agenda.hasLoaded {
             Image(nsImage: Self.markTemplate)
-        } else if let minutes = agenda.minutesRemaining {
+        } else {
+            HStack(spacing: 7) {
+                agendaStatus
+                if let minutes = agenda.pomodoroMinutesRemaining,
+                   let pomodoro = agenda.activePomodoro {
+                    Text("\(minutes) min")
+                        .fontWeight(.semibold)
+                        .foregroundStyle(pomodoro.phase.isBreak ? Color.green : Color.red)
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var agendaStatus: some View {
+        if let minutes = agenda.minutesRemaining {
             Text("\(minutes) min")
                 .underline(true, color: .accentColor)
         } else if let until = agenda.minutesUntilNext {
