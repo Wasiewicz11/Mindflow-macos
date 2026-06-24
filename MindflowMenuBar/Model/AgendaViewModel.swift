@@ -13,6 +13,7 @@ final class AgendaViewModel: ObservableObject {
 
     private var api: APIClient?
     private let notifier = BlockNotifier()
+    private let pomodoroSoundNotifier = PomodoroSoundNotifier()
     private var clockTimer: Timer?
     private var agendaPollTimer: Timer?
     private var pomodoroPollTimer: Timer?
@@ -87,6 +88,7 @@ final class AgendaViewModel: ObservableObject {
         lastError = nil
         hasLoaded = false
         notifier.cancelAll()
+        pomodoroSoundNotifier.stop()
     }
 
     func refresh() async {
@@ -115,13 +117,23 @@ final class AgendaViewModel: ObservableObject {
         do {
             let session = try await PomodoroService(api: api).currentSession()
             guard self.api === api else { return }
+            let refreshedAt = Date()
+            pomodoroSoundNotifier.update(session: session, now: refreshedAt)
             pomodoro = session
-            now = Date()
+            now = refreshedAt
         } catch is CancellationError {
             // ignor
         } catch {
             // Agenda nadal dziala, gdy opcjonalny endpoint Pomodoro jest chwilowo niedostepny.
         }
+    }
+
+    func previewFocusCompletedSound() {
+        pomodoroSoundNotifier.previewFocusCompleted()
+    }
+
+    func previewBreakCompletedSound() {
+        pomodoroSoundNotifier.previewBreakCompleted()
     }
 
     // MARK: - Timery

@@ -3,14 +3,26 @@ import SwiftUI
 struct AgendaPopover: View {
     @EnvironmentObject private var session: SessionStore
     @EnvironmentObject private var agenda: AgendaViewModel
+    @State private var isShowingSettings = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            if let current = agenda.current {
-                currentSection(current)
+        Group {
+            if isShowingSettings {
+                PomodoroSoundSettingsView {
+                    withAnimation(.easeOut(duration: 0.18)) { isShowingSettings = false }
+                }
+                .transition(.opacity.combined(with: .move(edge: .trailing)))
             } else {
-                emptyCurrent
+                agendaContent
+                    .transition(.opacity.combined(with: .move(edge: .leading)))
             }
+        }
+    }
+
+    private var agendaContent: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            if let current = agenda.current { currentSection(current) }
+            else { emptyCurrent }
 
             Divider().padding(.horizontal, 16).padding(.vertical, 12)
 
@@ -28,6 +40,7 @@ struct AgendaPopover: View {
             HStack {
                 sectionLabel("TERAZ")
                 Spacer()
+                settingsButton
                 refreshButton
             }
 
@@ -64,6 +77,7 @@ struct AgendaPopover: View {
             HStack {
                 sectionLabel("TERAZ")
                 Spacer()
+                settingsButton
                 refreshButton
             }
             Text("Brak aktywnego bloku")
@@ -129,6 +143,18 @@ struct AgendaPopover: View {
 
     // MARK: - Wspolne
 
+    private var settingsButton: some View {
+        Button {
+            withAnimation(.easeOut(duration: 0.18)) { isShowingSettings = true }
+        } label: {
+            Image(systemName: "gearshape")
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(.secondary)
+        }
+        .buttonStyle(.plain)
+        .help("Ustawienia dźwięków Pomodoro")
+    }
+
     private var refreshButton: some View {
         Button {
             Task { await agenda.refresh() }
@@ -145,6 +171,100 @@ struct AgendaPopover: View {
             .font(.caption2.weight(.semibold))
             .tracking(1.2)
             .foregroundStyle(.secondary)
+    }
+}
+
+private struct PomodoroSoundSettingsView: View {
+    @EnvironmentObject private var agenda: AgendaViewModel
+    let onBack: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 10) {
+                Button(action: onBack) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 12, weight: .semibold))
+                        .frame(width: 26, height: 26)
+                        .background(Color.primary.opacity(0.06), in: RoundedRectangle(cornerRadius: 8))
+                }
+                .buttonStyle(.plain)
+                .help("Wróć")
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Ustawienia")
+                        .font(.headline)
+                    Text("Dźwięki Pomodoro")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            Divider().padding(.vertical, 14)
+
+            VStack(spacing: 10) {
+                SoundPreviewRow(
+                    icon: "bell.fill",
+                    color: .red,
+                    title: "Koniec skupienia",
+                    description: "Jeden miękki dzwon · ponad 2 sekundy",
+                    action: agenda.previewFocusCompletedSound
+                )
+                SoundPreviewRow(
+                    icon: "bell.and.waves.left.and.right.fill",
+                    color: .green,
+                    title: "Koniec przerwy",
+                    description: "Dwa krótkie, delikatne dzwonki",
+                    action: agenda.previewBreakCompletedSound
+                )
+            }
+
+            Text("Podgląd korzysta z głośności systemowej Maca.")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+                .padding(.top, 14)
+
+            Spacer(minLength: 0)
+        }
+        .padding(16)
+        .frame(minHeight: 300, alignment: .top)
+    }
+}
+
+private struct SoundPreviewRow: View {
+    let icon: String
+    let color: Color
+    let title: String
+    let description: String
+    let action: () -> Void
+
+    var body: some View {
+        HStack(spacing: 11) {
+            Image(systemName: icon)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(color)
+                .frame(width: 32, height: 32)
+                .background(color.opacity(0.1), in: RoundedRectangle(cornerRadius: 9))
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .font(.subheadline.weight(.semibold))
+                Text(description)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+            }
+
+            Spacer(minLength: 8)
+
+            Button(action: action) {
+                Label("Odtwórz", systemImage: "play.fill")
+                    .font(.caption.weight(.semibold))
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+        }
+        .padding(11)
+        .background(Color.primary.opacity(0.045), in: RoundedRectangle(cornerRadius: 12))
     }
 }
 
