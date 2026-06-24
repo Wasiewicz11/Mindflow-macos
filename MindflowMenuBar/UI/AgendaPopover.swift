@@ -44,9 +44,7 @@ struct AgendaPopover: View {
                     .foregroundStyle(.secondary)
             }
 
-            if let pomodoro = agenda.activePomodoro,
-               let pomodoroTaskId = pomodoro.taskId,
-               pomodoroTaskId == item.taskId {
+            if let pomodoro = agenda.activePomodoro {
                 HStack(spacing: 6) {
                     Image(systemName: "timer")
                         .font(.system(size: 11, weight: .semibold))

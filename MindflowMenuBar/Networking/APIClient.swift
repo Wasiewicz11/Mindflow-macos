@@ -40,6 +40,8 @@ final class APIClient {
         cfg.httpShouldSetCookies = true
         cfg.waitsForConnectivity = true
         cfg.timeoutIntervalForRequest = 30
+        cfg.requestCachePolicy = .reloadIgnoringLocalCacheData
+        cfg.urlCache = nil
         self.session = URLSession(configuration: cfg)
 
         // Po restarcie apki cookie-jar jest pusty -> wstaw refresh token z Keychain.
@@ -103,6 +105,10 @@ final class APIClient {
     private func sendAuthorized(path: String, method: String, retryOn401: Bool = true) async throws -> Data {
         var req = URLRequest(url: url(for: path))
         req.httpMethod = method
+        if method == "GET" {
+            req.cachePolicy = .reloadIgnoringLocalCacheData
+            req.setValue("no-cache, no-store", forHTTPHeaderField: "Cache-Control")
+        }
         if let token = tokenStore.accessToken {
             req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }

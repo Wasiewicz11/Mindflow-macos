@@ -14,6 +14,10 @@ struct MindflowMenuBarApp: App {
                 .environmentObject(agenda)
         } label: {
             MenuBarLabel(agenda: agenda, isLoggedIn: session.isLoggedIn)
+                .task(id: session.isLoggedIn) {
+                    if session.isLoggedIn { agenda.start(api: session.api) }
+                    else { agenda.stop() }
+                }
         }
         .menuBarExtraStyle(.window)
     }

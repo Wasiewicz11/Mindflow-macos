@@ -64,6 +64,7 @@ final class AgendaViewModel: ObservableObject {
     // MARK: - Cykl zycia
 
     func start(api: APIClient) {
+        guard self.api !== api else { return }
         self.api = api
         startTimers()
         startPomodoroEvents(api: api)
